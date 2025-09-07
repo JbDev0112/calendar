@@ -1,0 +1,249 @@
+* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: gray;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .calendar-container {
+            perspective: 1000px;
+            margin: 40px auto;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .calendar-title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: transparent;
+            background: linear-gradient(to right, aqua, red);
+            background-clip: text;
+            font-size: 80px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+            letter-spacing: 2px;
+        }
+
+        .year-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            padding: 20px;
+        }
+
+        .month-card {
+            background: linear-gradient(145deg, #ffffff, #f8f9fa);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 
+                0 20px 40px rgba(0,0,0,0.25),
+                0 15px 15px rgba(0,0,0,0.22),
+                0 0 0 3px #4a5568,
+                0 0 0 6px #2d3748;
+            transform: rotateX(5deg) rotateY(5deg);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .month-card:hover {
+            transform: rotateX(0deg) rotateY(0deg) translateY(-5px);
+            box-shadow: 
+                0 25px 50px rgba(0,0,0,0.3),
+                0 20px 20px rgba(0,0,0,0.25),
+                0 0 0 4px #667eea,
+                0 0 0 8px #4a5568;
+        }
+
+        .month-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .month-header {
+            text-align: center;
+            margin-bottom: 15px;
+            color: transparent;
+            background: linear-gradient(to left, red, blue);
+            background-clip: text;
+            font-size: 40px;
+            font-weight: bold;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .calendar-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 2px;
+        }
+
+        .calendar-table th {
+            background: linear-gradient(145deg, #667eea, #764ba2);
+            color: white;
+            padding: 8px;
+            text-align: center;
+            font-weight: bold;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
+        .calendar-table th span {
+            display: block;
+            font-size: 0.75rem;
+            margin-top: 2px;
+            color: pink;
+        }
+
+        .calendar-table td {
+            padding: 8px;
+            text-align: center;
+            background: #f8fafc;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: pointer;
+            height: 40px;
+        }
+
+        .calendar-table td:hover {
+            background: aqua;
+            transform: scale(1.05);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .empty {
+            background: transparent !important;
+            cursor: default;
+        }
+
+        .empty:hover {
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        .holiday {
+            background: linear-gradient(145deg, #ff6b6b, #ee5a24) !important;
+            color: white !important;
+            font-weight: bold;
+            position: relative;
+            border-color: #fd79a8;
+        }
+
+        .holiday::after {
+            content: '★';
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .weekend {
+            background: #edf2f7;
+            color: #718096;
+        }
+
+        .current-day {
+            background: linear-gradient(145deg, #48bb78, #38a169) !important;
+            color: white !important;
+            font-weight: bold;
+            box-shadow: 0 0 0 2px #48bb78 inset;
+        }
+
+        .holiday {
+            position: relative;
+        }
+        .holiday:hover {
+            background: linear-gradient(145deg, #fdcb6e 0%, #e17055 100%);
+        }
+
+        .holiday-popup {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2d3748;
+            color: white;
+            padding:10px;
+            border-radius: 10px;
+            border: 3px solid #ff7675;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            font-size: 0.8rem;
+            visibility: hidden;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            text-align: center;
+        }
+
+        .holiday-popup img{
+            width: 120px;
+            height: 80px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            border: 2px solid #fdcb6e;
+        }
+
+        .holiday-popup .holiday-name {
+            font-weight: bold;
+            color: #d63031;
+            font-size: 0.9em
+        }
+
+        .holiday:hover {
+            background-color: linear-gradient(145deg, #fdcb6e 0%, #e17055 100%);
+        }
+
+        .holiday:hover .holiday-popup {
+            opacity: 1;
+            visibility: visible;
+            bottom: calc(100% + 10px)
+         }
+
+        @media (max-width: 768px) {
+            .year-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .calendar-title {
+                font-size: 2rem;
+            }
+            
+            .month-card {
+                padding: 15px;
+            }
+            
+            .calendar-table td {
+                padding: 6px;
+                height: 35px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .calendar-table th,
+            .calendar-table td {
+                padding: 4px;
+                font-size: 0.8rem;
+            }
+            
+            .month-header {
+                font-size: 1.3rem;
+            }
+        }
